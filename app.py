@@ -2,6 +2,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from diagrams import oval_svg, svg_html, torispherical_svg
 from head_volume import oval_head, oval_profile, torispherical_head, torispherical_profile
 
 st.set_page_config(page_title="HeadCalc – Tank Head Volume", page_icon="🛢️", layout="centered")
@@ -25,6 +26,8 @@ def num(label, default_m, help_):
 try:
     if head_type == "Oval / Ellipsoidal":
         st.subheader("Oval / Ellipsoidal head inputs")
+        st.markdown(svg_html(oval_svg(), 640), unsafe_allow_html=True)
+        st.caption("Schematic – not to scale.")
         a, b = st.columns(2)
         with a:
             W = num("W – Total internal width", 2.4, "Total internal width of the tank base (major axis).")
@@ -42,6 +45,8 @@ $$V_{SF} = \pi\, a\, b\, SF$$
 """
     else:
         st.subheader("Torispherical head inputs")
+        st.markdown(svg_html(torispherical_svg(), 420), unsafe_allow_html=True)
+        st.caption("Schematic – not to scale. Dish depth h is calculated from D_i, CR and KR.")
         a, b = st.columns(2)
         with a:
             D_i = num("D_i – Inside diameter", 2.0, "Inside diameter of the tank shell.")
